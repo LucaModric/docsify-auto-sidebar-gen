@@ -1,7 +1,7 @@
 from configparser import ConfigParser
-from os.path import splitext, basename, join, isdir, relpath, abspath
+from os.path import splitext, basename, join, isdir, relpath, abspath, split
 from os import listdir
-
+from sys import argv
 
 base_dir = None
 start_with = None
@@ -14,9 +14,11 @@ create_depth = -1
 
 def read_config():
     global base_dir, show_file, start_with, ignore_file_name, ReadmeFile, _sidebarFile, out_file_list, create_depth
-
+    # exe 默认是在盘的local/temp，此时就拿不到相对路径下的config.ini
+    # sys.argv解决该bug
     cf = ConfigParser()
-    cf.read("config.ini", encoding='utf-8')
+    print("程序执行的当前路径:   " + split(argv[0])[0])
+    cf.read(split(argv[0])[0] + "\config.txt", encoding='utf-8')
     base_dir = cf.get("config", "base_dir")
     start_with = cf.get("config", "ignore_start_with").split("|")
     show_file = cf.get("config", "show_file").split('|')
@@ -110,7 +112,7 @@ def save_structure(root_dir, base_dir=base_dir, depth=0):
             with open(join(root, file_name), 'w', encoding="utf-8") as f:
                 f.write(subdir_structure)
     else:
-        if depth == 0 :
+        if depth == 0:
             for file_name in out_file_list:
                 with open(join(root, file_name), 'w', encoding="utf-8") as f:
                     f.write(subdir_structure)

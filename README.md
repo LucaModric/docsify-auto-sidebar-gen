@@ -4,17 +4,17 @@
 
 > 打包成exe文件，程序大小约为5M，还是比较轻量的，主要文件有：
 > 1. buildSidebar.exe -> 执行程序后在config.ini设置的根目录下文件夹生成READMD.md和_sidebar.md（名称可自定义）
-> 2. config.ini -> 配置生成文件的一些输出文件\忽略情况等选项,具体可以看config.ini文件中注释
+> 2. config.txt -> 配置生成文件的一些输出文件\忽略情况等选项,具体可以看config.ini文件中注释
 
 docsify好像没法自动读取文件夹目录结构并且展示在页面上,需要对每个文件夹配置_sidebar.md文件
 
 所以我尝试用python做了一个脚本,基本就用到了os库中的一些函数,所以打包成exe文件大小在可以接受的范围里面,只有5M左右
 
-该程序运行的配置参数依赖于config.ini,所以使用前请将config.ini和builSidebar.exe放在同一个目录下
+该程序运行的配置参数依赖于config.txt,所以使用前请将config.txt和builSidebar.exe放在同一个目录下
 
 在生成md文件结构时,有时想要**忽略一些文件**或者**"_"开头的文件夹**,可以通过config.ini配置
 
-```ini
+```txt
 [config]
 # docsify根目录
 base_dir=D:\MyData\Data\Docsify\docs
@@ -62,7 +62,7 @@ docs
             测试.md
 ```
 
-我在config.ini设置忽略:
+我在config.txt设置忽略:
 1. 以"_","."开头的文件
 2. 忽略文件名为README的文件
 3. 结构中只包括".md"开头的文件
