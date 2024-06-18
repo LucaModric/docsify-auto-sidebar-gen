@@ -3,8 +3,8 @@
 # docsify sidebar automatically generates scripts
 
 > 打包成exe文件，程序大小约为5M，还是比较轻量的，主要文件有：
-> 1. buildSidebar.exe -> 执行程序后在config.ini设置的根目录下文件夹生成READMD.md和_sidebar.md（名称可自定义）
-> 2. config.txt -> 配置生成文件的一些输出文件\忽略情况等选项,具体可以看config.ini文件中注释
+> 1. buildSidebar.exe -> 执行程序后在config.txt设置的根目录下文件夹生成READMD.md和_sidebar.md（名称可自定义）
+> 2. config.txt -> 配置生成文件的一些输出文件\忽略情况等选项,具体可以看config.txt文件中注释
 
 docsify好像没法自动读取文件夹目录结构并且展示在页面上,需要对每个文件夹配置_sidebar.md文件
 
@@ -12,7 +12,7 @@ docsify好像没法自动读取文件夹目录结构并且展示在页面上,需
 
 该程序运行的配置参数依赖于config.txt,所以使用前请将config.txt和builSidebar.exe放在同一个目录下
 
-在生成md文件结构时,有时想要**忽略一些文件**或者**"_"开头的文件夹**,可以通过config.ini配置
+在生成md文件结构时,有时想要**忽略一些文件**或者**"_"开头的文件夹**,可以通过config.txt配置
 
 ```txt
 [config]
@@ -118,7 +118,7 @@ docs
 
 # 举例2
 
-> 上面的格式中,点击相应文件夹实际上会跳转,如果不想跳转,可以设置config.ini文件的create_depth参数
+> 上面的格式中,点击相应文件夹实际上会跳转,如果不想跳转,可以设置config.txt文件的create_depth参数
 > 
 > 当参数为-1时候,则每个文件夹生成文件
 > 
@@ -151,7 +151,7 @@ docs
             测试.md
 ```
 
-config.ini中`create_depth`设为0
+config.txt`create_depth`设为0
 
 生成的新结构
 
