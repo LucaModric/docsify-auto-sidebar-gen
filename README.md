@@ -4,7 +4,7 @@
 
 > 打包成exe文件，程序大小约为5M，还是比较轻量的，主要文件有：
 > 1. buildSidebar.exe -> 执行程序后在config.txt设置的根目录下文件夹生成READMD.md和_sidebar.md（名称可自定义）
-> 2. config.txt -> 配置生成文件的一些输出文件\忽略情况等选项,具体可以看config.txt文件中注释
+> 2. config.txt -> 配置生成文件的一些输出文件\忽略情况等选项,具体可以看config.txt文件中注释(作者使用的是config.ini文件,exe读取不到ini,遂改为txt)
 
 docsify好像没法自动读取文件夹目录结构并且展示在页面上,需要对每个文件夹配置_sidebar.md文件
 
@@ -108,11 +108,11 @@ docs
 
 在根目录情况:
 
-![img0.png](image/img0.png)
+![img0.png](https://github.com/LucaModric/docsify-auto-sidebar-gen/blob/master/image/img0.png)
 
 点击PLC之后
 
-![img4.png](image/img4.png)
+![img4.png](https://github.com/LucaModric/docsify-auto-sidebar-gen/blob/master/image/img4.png)
 
 这种方式生成的结构,点击新文件夹会刷新界面,也可以接受
 
@@ -184,8 +184,8 @@ docs
 
 ## 图片
 
-![img.png](image/img.png)
+![img.png](https://github.com/LucaModric/docsify-auto-sidebar-gen/blob/master/image/img.png)
 
 配合侧边栏折叠插件:https://github.com/iPeng6/docsify-sidebar-collapse
 
-![img2.png](image/img2.png)
+![img2.png](https://github.com/LucaModric/docsify-auto-sidebar-gen/blob/master/image/img2.png)
