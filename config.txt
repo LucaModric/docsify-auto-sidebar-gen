@@ -1,13 +1,27 @@
 [config]
 # docsify根目录
-base_dir=C:\Users\Administrator\Desktop\docsify\docs
+base_dir=C:\Users\Administrator\Desktop\test\demo
 # 忽略以“_”,"."开头的文件，如果要添加新文件，用“|”分隔
 ignore_start_with=_|.
 # 只读取".md"格式问价，如果添加新格式，用“|”分隔
 show_file=.md
 # 要忽略的文件名，要添加新文件，用“|”分隔
 ignore_file_name=README
+# 是否展示文件的后缀名，空值默认不展示，填上任意字符表示展示，比如show_extension=1
+show_extension=
+#不展示的文件夹（文件下所有文件都不展示），多个文件夹用“|”分隔
+ignore_dir_name=秘密
 
+# pdf相关配置
+# 为pdf生成对应的md文件：0不生成(没有pdf文件或者不需要)；1部分生成,配合updatedPdfFiles使用可只更新updatedPdfFiles配置的pdf,当你修改了某些pdf的md,不希望覆盖可使用；
+# 2全部生成，会覆盖你之前所有pdf的md，配合ignore_pdf_filename使用可忽略指定的pdf不更新；
+pdf_write_mode=2
+# 需要更新的pdf列表，多个文件用“|”分隔，如 python基础.pdf|java基础.pdf，搭配pdf_write_mode=1使用
+updated_pdf_files=python基础.pdf|java基础.pdf
+# 不需要展示的pdf文件目录，比如"秘密"和""简历""目录里面的pdf，不想展示，多个目录用“|”，如  秘密|简历
+ignore_pdf_dirname=秘密|简历
+# 不需要展示的pdf文件，多个文件用“|”分割，如 个人简历.pdf|征信查询.pdf，搭配pdf_write_mode=2使用
+ignore_pdf_filename=个人简历.pdf|征信查询.pdf
 
 [outFile]
 # 想要在几级目录生成文件,默认"-1"表示所有文件夹生成,"0"表示在根目录生成,可以配合侧边栏折叠插件使用
