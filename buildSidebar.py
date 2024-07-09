@@ -1,6 +1,6 @@
 from configparser import ConfigParser
 from os.path import splitext, basename, join, isdir, relpath, abspath, split
-from os import listdir
+from os import listdir,getcwd,system
 from sys import argv
 
 base_dir = None
@@ -17,17 +17,30 @@ pdf_write_mode = None
 out_file_list = []
 create_depth = -1
 
+# 解决Nuitka打包后控制台输出中文乱码,看提示python3.8已上没这个问题，我用的是python3.7
+system("chcp 65001 && cls")
+
+
 
 def read_config():
-    global base_dir, show_file, start_with, ignore_file_name, out_file_list, create_depth, show_extension, ignore_dir_name
-    global ignore_pdf_dirname, ignore_pdf_filename, updated_pdf_files, pdf_write_mode
+    # \ 可以“换行”，表示上下两行是一行代码
+    global base_dir, show_file, start_with, ignore_file_name, out_file_list, create_depth, show_extension, ignore_dir_name, \
+        ignore_pdf_dirname, ignore_pdf_filename, updated_pdf_files, pdf_write_mode
     # exe 默认是在盘的local/temp，此时就拿不到相对路径下的config.ini
     # sys.argv解决该bug
     cf = ConfigParser()
-    print("程序执行的当前路径:   " + split(argv[0])[0])
+
     # cf.read("config.ini", encoding='utf-8') 作者原来的写法
-    cf.read(split(argv[0])[0] + "\config.txt", encoding='utf-8')
+    # 今天偶然发现在编辑器的终端执行修改过路径读取的exe会报错，直接运行则不会，又把作者的exe下载过来，发现无论直接运行还是cmd都不会报错
+    # 以为是装了python有了相关环境的问题，把python卸载了也是如此，那么当初为啥运行不了，具体报错信息记不清了
+    # 估计是作者的zip包的config.ini 配置不齐全导致的，而当时我对python完全不懂，也不知具体报错是啥了
+    # zip包里的config.ini确实没和readme.md里配置一致，对python小白不友好，应该保证用户只需修改docsify项目跟目录就能运行，其他选项用户再看需求改动具体值
+    # 不过为啥改过的在cmd会失败呢？有文章说是父进程之类的不同。。。。。；下面是改动的代码，现在还原回作者的代码，配置文件后缀就不改了
+    # print("程序执行的当前路径:   " + split(argv[0])[0])
+    # cf.read(split(argv[0])[0] + "\config.txt", encoding='utf-8')
+    cf.read("config.txt", encoding='utf-8')
     base_dir = cf.get("config", "base_dir")
+    print("程序运行的路径:   " + getcwd())
     print("项目的根路径base_dir:   " + base_dir)
     start_with = cf.get("config", "ignore_start_with").split("|")
     show_file = cf.get("config", "show_file").split('|')
@@ -141,7 +154,7 @@ def save_structure(root_dir, base_dir=base_dir, depth=0):
     return back_struct
 
 
-def changePdfToMd(root_dir, base_dir=base_dir):
+def change_pdf_to_md(root_dir, base_dir=base_dir):
     if (pdf_write_mode == 0):
         return
     for item in listdir(root_dir):
@@ -150,19 +163,19 @@ def changePdfToMd(root_dir, base_dir=base_dir):
             if item in ignore_pdf_dirname:
                 continue
             else:
-                changePdfToMd(filepath, base_dir)
+                change_pdf_to_md(filepath, base_dir)
         else:
             file_name, file_extension = splitext(item)
             if ".pdf" == file_extension.lower():
                 if pdf_write_mode == 1:
                     if item in updated_pdf_files:
-                        writePdf(base_dir, file_name, filepath, root_dir)
+                        write_pdf(base_dir, file_name, filepath, root_dir)
                 else:
                     if item not in ignore_pdf_filename:
-                        writePdf(base_dir, file_name, filepath, root_dir)
+                        write_pdf(base_dir, file_name, filepath, root_dir)
 
 
-def writePdf(base_dir, file_name, filepath, root_dir):
+def write_pdf(base_dir, file_name, filepath, root_dir):
     # md的文件名不能有空格，否则显示异常，这里重命名文件
     filepath_md = join(root_dir, file_name.replace(" ", "_") + ".md")
     content = "### " + file_name.replace(" ", "_") + "\n";
@@ -172,8 +185,9 @@ def writePdf(base_dir, file_name, filepath, root_dir):
         f.write(content)
     print(f'{file_name}.pdf 成功生成对应的MD!')
 
+
 if __name__ == "__main__":
     read_config()
-    changePdfToMd(base_dir, base_dir)
+    change_pdf_to_md(base_dir, base_dir)
     save_structure(base_dir, base_dir, 0)
-    input("按任意键结束程序")
+    input("侧边成功创建，请按回车键结束程序")
