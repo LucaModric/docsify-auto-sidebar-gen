@@ -1,7 +1,8 @@
 from configparser import ConfigParser
 from os.path import splitext, basename, join, isdir, relpath, abspath, split
-from os import listdir,getcwd,system
+from os import listdir, getcwd, system
 from sys import argv
+from natsort import ns, natsorted
 
 base_dir = None
 start_with = None
@@ -19,7 +20,6 @@ create_depth = -1
 
 # 解决Nuitka打包后控制台输出中文乱码,看提示python3.8已上没这个问题，我用的是python3.7
 system("chcp 65001 && cls")
-
 
 
 def read_config():
@@ -93,7 +93,9 @@ def save_structure(root_dir, base_dir=base_dir, depth=0):
     root = root_dir
     dirs = []
     files = []
-    for item in listdir(root):
+    items = listdir(root)
+    nat_items = natsorted(items, alg=ns.PATH)
+    for item in nat_items:
         if isdir(join(root, item)):
             dirs.append(item)
         else:
